@@ -25,6 +25,7 @@ db.exec(`
     telephone_mobile TEXT,
     email TEXT,
     specialite TEXT,
+    bio TEXT,
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
   );
 
@@ -35,6 +36,7 @@ db.exec(`
     telephone TEXT NOT NULL,
     email TEXT,
     adresse TEXT,
+    password_hash TEXT,
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
   );
 
@@ -56,4 +58,14 @@ db.exec(`
     date_fin TEXT NOT NULL,
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
   );
+
+  CREATE TABLE IF NOT EXISTS avis (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    patient_id INTEGER NOT NULL REFERENCES patients(id),
+    medecin_id INTEGER NOT NULL REFERENCES medecins(id),
+    note INTEGER NOT NULL,
+    commentaire TEXT,
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+  );
+
 `);
