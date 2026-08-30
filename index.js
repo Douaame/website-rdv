@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const session = require('express-session');
 const app = express();
 const PORT = 3000;
+const path = require('path');
 
 function requireSecretaire(req, res, next) {
   if (!req.session.secretaireId) {
@@ -18,6 +19,8 @@ function requirePatient(req, res, next) {
   }
   next();
 }
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.json());
 
@@ -158,6 +161,21 @@ app.post('/api/rdv', requireSecretaire, (req, res) => {
   const result = stmt5.run(patient_id, medecin_id, secretaire_id, date_heure);
 
   res.status(201).json({ id: result.lastInsertRowid, patient_id, medecin_id, secretaire_id, date_heure });
+});
+
+app.get('/api/rdv', requireSecretaire, (req, res) => {
+  const rdvs = db.prepare(`
+    SELECT r.id, r.date_heure, r.statut,
+           p.nom AS patient_nom, p.prenom AS patient_prenom,
+           m.nom AS medecin_nom, m.prenom AS medecin_prenom
+    FROM rdv r
+    JOIN patients p ON p.id = r.patient_id
+    JOIN medecins m ON m.id = r.medecin_id
+    WHERE r.statut != 'annule'
+    ORDER BY r.date_heure ASC
+  `).all();
+
+  res.json(rdvs);
 });
 
 app.post('/api/patients/signup', async (req, res) => {

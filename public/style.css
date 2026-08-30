@@ -1,0 +1,50 @@
+body {
+    font-family: system-ui, sans-serif; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: #f4f6f8;
+}
+
+.login-box {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+input, button {
+    display: block;
+    width: 100%;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+}
+
+#error-msg {
+    color: #c0392b;
+}
+#calendrier-grille {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  max-width: 700px;
+  margin: 2rem auto;
+}
+
+.jour-entete {
+  font-weight: bold;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.case-jour {
+  border: 1px solid #ddd;
+  min-height: 80px;
+  padding: 0.3rem;
+  border-radius: 4px;
+}
+
+.case-vide {
+  background: transparent;
+}
