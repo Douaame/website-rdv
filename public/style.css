@@ -48,3 +48,67 @@ input, button {
 .case-vide {
   background: transparent;
 }
+
+.rdv-item {
+  background: #dbe9ff;
+  font-size: 0.7rem;
+  padding: 2px 4px;
+  border-radius: 3px;
+  margin-top: 2px;
+}
+
+.calendrier-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.calendrier-nav button {
+  font-size: 1.5rem;
+  padding: 0.2rem 0.8rem;
+  cursor: pointer;
+}
+
+.popover {
+  position: absolute;
+  display: none;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.8rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  z-index: 100;
+  pointer-events: none;
+}
+
+.modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.modal-contenu {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  width: 320px;
+}
+
+.modal-contenu input, .modal-contenu select {
+  display: block;
+  width: 100%;
+  margin: 0.4rem 0;
+  padding: 0.4rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}

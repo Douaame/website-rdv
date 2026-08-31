@@ -5,10 +5,38 @@
   <title>Calendrier des RDV</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
+  <div id="modal-rdv" class="modal" style="display: none;">
+  <div class="modal-contenu">
+    <h2>Nouveau RDV — <span id="modal-date"></span></h2>
+    <form id="form-rdv">
+      <label>Heure</label>
+      <input type="time" id="rdv-heure" required />
+
+      <label>Médecin</label>
+      <select id="rdv-medecin" required></select>
+
+      <hr>
+      <p>Patient</p>
+      <input type="text" id="rdv-nom" placeholder="Nom" required />
+      <input type="text" id="rdv-prenom" placeholder="Prenom" required />
+      <input type="tel" id="rdv-telephone" placeholder="Telephone" required />
+
+      <div class="modal-actions">
+        <button type="button" id="modal-annuler">Annuler</button>
+        <button type="submit">Créer le RDV</button>
+      </div>
+    </form>
+  </div>
+</div>
   <h1 id="mois-titre"></h1>
   <div id="calendrier-grille"></div>
-
+  <div class="calendrier-nav">
+  <button id="mois-precedent">‹</button>
+  <button id="mois-suivant">›</button>
+  </div>
+  <div id="popover" class="popover"></div>
   <script src="calendrier.js"></script>
 </body>
 </html>

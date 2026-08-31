@@ -67,6 +67,11 @@ app.post('/api/medecins', (req, res) => {
 
 });
 
+app.get('/api/medecins', requireSecretaire, (req, res) => {
+  const medecins = db.prepare('SELECT id, nom, prenom, specialite FROM medecins').all();
+  res.json(medecins);
+});
+
 app.post('/api/secretaires', async (req, res) => {
   const { nom, prenom, telephone, email, password } = req.body;
 
@@ -112,9 +117,9 @@ app.post('/api/secretaires/login', async (req, res) => {
 });
 
 app.post('/api/rdv', requireSecretaire, (req, res) => {
-  let { patient_id, medecin_id, secretaire_id, date_heure } = req.body;
-  const { nom, prenom, telephone } = req.body;
-
+  let { patient_id, medecin_id, date_heure } = req.body;
+  const { nom, prenom, telephone } = req.body;  // secretaire_id retire d'ici
+  const secretaire_id = req.session.secretaireId;        // vient de la session, pas du client
   if (!medecin_id || !secretaire_id || !date_heure) {
     return res.status(400).json({ error: 'medecin_id, secretaire_id et date_heure sont obligatoires' });
   }
@@ -166,8 +171,8 @@ app.post('/api/rdv', requireSecretaire, (req, res) => {
 app.get('/api/rdv', requireSecretaire, (req, res) => {
   const rdvs = db.prepare(`
     SELECT r.id, r.date_heure, r.statut,
-           p.nom AS patient_nom, p.prenom AS patient_prenom,
-           m.nom AS medecin_nom, m.prenom AS medecin_prenom
+           p.nom AS patient_nom, p.prenom AS patient_prenom, p.telephone AS patient_telephone,
+           m.nom AS medecin_nom, m.prenom AS medecin_prenom, m.specialite AS medecin_specialite
     FROM rdv r
     JOIN patients p ON p.id = r.patient_id
     JOIN medecins m ON m.id = r.medecin_id
